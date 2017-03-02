@@ -2,6 +2,7 @@ package com.example.email_validator_ui;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.example.email_validator_ui.App;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -49,8 +50,12 @@ public class MyUI extends UI {
     }
     private void validateEmail(String emailaddress) {
     	{
-            message.setValue(emailaddress + " is invalid");
-            message.setValue(emailaddress + " is valid");
+    		int result = App.main(emailaddress);
+    		if (result !=4){
+    			message.setValue(emailaddress + " is invalid");
+    		}else {
+    			message.setValue(emailaddress + " is valid");
+    		}
             message.setVisible(true);
         }
     }
