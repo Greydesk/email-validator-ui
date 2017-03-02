@@ -21,21 +21,22 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Theme("mytheme")
 public class MyUI extends UI {
+	
+    Label message = new Label ("");
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
+        final TextField email = new TextField();
+        email.setCaption("Type your email here:");
 
-        Button button = new Button("Click Me");
-        button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
-        });
+        Button button = new Button("Validate");
+        button.addClickListener( e -> validateEmail(email.getValue()));
         
-        layout.addComponents(name, button);
+        message.setVisible(false);
+        
+        layout.addComponents(email, button, message);
         layout.setMargin(true);
         layout.setSpacing(true);
         
@@ -45,5 +46,12 @@ public class MyUI extends UI {
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
     @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
     public static class MyUIServlet extends VaadinServlet {
+    }
+    private void validateEmail(String emailaddress) {
+    	{
+            message.setValue(emailaddress + " is invalid");
+            message.setValue(emailaddress + " is valid");
+            message.setVisible(true);
+        }
     }
 }
